@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Осбуждения</title>
+</head>
+<body>
+<table>
+    <tr>
+        <th>Пользователь</th>
+        <th>Тема</th>
+    </tr>
+    <tr th:each="discussion : ${discussions}">
+        <td th:text="${discussion.getUsername()}">
+        <td th:text="${discussion.getTopic()}">
+    </tr>
+</table>
+</body>
+</html>
