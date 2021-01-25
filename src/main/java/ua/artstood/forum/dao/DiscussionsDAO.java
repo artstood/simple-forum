@@ -28,6 +28,7 @@ public class DiscussionsDAO {
     }
 
     public void save(Discussion discussion){
+        discussion.setId(database.size());
         database.add(database.size(), discussion);
     }
 }
