@@ -11,7 +11,7 @@
         <th>Тема</th>
     </tr>
     <tr th:each="discussion : ${discussions}">
-        <td th:text="${discussion.getUsername()}">
+        <b><td th:text="${'<' + discussion.getUsername() + '>'}"/></b>
         <td> <a th:href="@{/discussions/{id}(id=${discussion.getId()})}" th:text="${discussion.getTopic()}"></a></td>
     </tr>
 </table>

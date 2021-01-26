@@ -5,8 +5,14 @@
     <title th:text="${discussion.getTopic()}"></title>
 </head>
 <body>
-<p th:text="${discussion.getUsername()}"/>
-<p th:text="${discussion.getTopic()}"/>
+<b th:text="${'<'+discussion.getUsername()+'>:' +discussion.getTopic()}"/>
+<!--<p th:text=""/>-->
+<table>
+    <tr th:each="comment : ${comments}">
+        <td th:text="${'<'+comment.getUsername()+'>:'}"></td>
+        <td th:text="${comment.getComment()}"></td>
+    </tr>
+</table>
 <a href="/discussions">Назад</a>
 </body>
 </html>
