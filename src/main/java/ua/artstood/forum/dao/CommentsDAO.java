@@ -21,7 +21,7 @@ public class CommentsDAO {
         commentsTable.add(new Comment(commentsTable.size(), 1, "AnDrOiD_EnJoYeR","та не бойся, я свой телефон всегда так заряжаю"));
     }
 
-    public List<Comment> getDiscussionsComments(int dissId){
-        return commentsTable.stream().filter((comment)->comment.getDiscussionId()==dissId).collect(Collectors.toList());
+    public List<Comment> getDiscussionsComments(int disId){
+        return commentsTable.stream().filter((comment)->comment.getDiscussionId()==disId).collect(Collectors.toList());
     }
 }
