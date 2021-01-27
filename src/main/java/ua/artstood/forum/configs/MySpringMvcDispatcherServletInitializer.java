@@ -1,5 +1,6 @@
 package ua.artstood.forum.configs;
 
+import org.springframework.web.filter.HiddenHttpMethodFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 import javax.servlet.Filter;
@@ -22,6 +23,6 @@ public class MySpringMvcDispatcherServletInitializer extends AbstractAnnotationC
 
     @Override
     protected Filter[] getServletFilters() {
-        return new Filter[]{new CharsetFilter()};
+        return new Filter[]{new CharsetFilter(),new HiddenHttpMethodFilter()};
     }
 }

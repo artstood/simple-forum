@@ -39,10 +39,30 @@ public class DiscussionsController {
     public String newDiscussion(@ModelAttribute("discussion") Discussion discussion){
         return "discussions/new";
     }
+
     @PostMapping()
     public String addNewDiscussion(@ModelAttribute("discussion") Discussion discussion){
         discussionsDAO.save(discussion);
         return "redirect:/discussions";
-
     }
+
+    @GetMapping("{id}/edit")
+    public String editForm(Model model, @PathVariable("id") int id){
+        model.addAttribute("discussion", discussionsDAO.getDiscussion(id));
+        return "discussions/edit";
+    }
+
+    @PatchMapping("{id}")
+    public String edit(@ModelAttribute("discussion") Discussion discussion, @PathVariable("id") int id){
+        discussionsDAO.update(id, discussion);
+        return "redirect:/discussions";
+    }
+
+    @DeleteMapping("{id}")
+    public String delete(@PathVariable("id") int id){
+        discussionsDAO.delete(id);
+        return "redirect:/discussions";
+    }
+
+
 }

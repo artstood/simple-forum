@@ -9,10 +9,22 @@
     <tr>
         <th>Пользователь</th>
         <th>Тема</th>
+        <th/>
+        <th/>
     </tr>
     <tr th:each="discussion : ${discussions}">
         <b><td th:text="${'<' + discussion.getUsername() + '>'}"/></b>
         <td> <a th:href="@{/discussions/{id}(id=${discussion.getId()})}" th:text="${discussion.getTopic()}"></a></td>
+        <td>
+            <form th:action="@{/discussions/{id}/edit(id=${discussion.getId()})}" >
+                <input type="submit" value="Изменить"/>
+            </form>
+        <td/>
+        <td>
+            <form th:action="@{/discussions/{id}(id=${discussion.getId()})}" th:method="DELETE">
+                <input type="submit" value="Удалить"/>
+            </form>
+        </td>
     </tr>
 </table>
 <a href="/discussions/new">Создать обсуждение</a>

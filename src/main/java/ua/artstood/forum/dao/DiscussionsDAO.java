@@ -32,4 +32,13 @@ public class DiscussionsDAO {
         discussion.setId(DB_SIZE++);
         database.add(discussion);
     }
+
+    public void update(int id, Discussion updated){
+        Discussion oldDiscussion = getDiscussion(id);
+        oldDiscussion.setTopic(updated.getTopic());
+        oldDiscussion.setUsername(updated.getUsername());
+    }
+    public void delete(int id){
+        database.removeIf(discussion -> discussion.getId()==id);
+    }
 }
