@@ -1,9 +1,17 @@
 package ua.artstood.forum.entities;
 
+import org.hibernate.validator.constraints.Length;
+
+import javax.validation.constraints.NotEmpty;
+
 public class Discussion {
     private int id;
+    @Length(min=6, max=18, message = "Имя должно быть не короче 6 букв и не длиннее 18")
+    @NotEmpty(message = "Имя не должно быть пустым")
     private String username;
+    @NotEmpty(message = "Тема не должна быть пустой")
     private String topic;
+    //todo discussion text
     //todo comments list
     //todo date
 

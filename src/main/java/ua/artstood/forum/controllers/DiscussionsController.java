@@ -3,10 +3,13 @@ package ua.artstood.forum.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ua.artstood.forum.dao.CommentsDAO;
 import ua.artstood.forum.dao.DiscussionsDAO;
 import ua.artstood.forum.entities.Discussion;
+
+import javax.validation.Valid;
 
 @Controller
 @RequestMapping("discussions")
@@ -41,7 +44,11 @@ public class DiscussionsController {
     }
 
     @PostMapping()
-    public String addNewDiscussion(@ModelAttribute("discussion") Discussion discussion){
+    public String addNewDiscussion(@ModelAttribute("discussion") @Valid Discussion discussion,
+                                   BindingResult bindingResult){
+        if(bindingResult.hasErrors()){
+            return "discussions/new";
+        }
         discussionsDAO.save(discussion);
         return "redirect:/discussions";
     }
@@ -53,7 +60,12 @@ public class DiscussionsController {
     }
 
     @PatchMapping("{id}")
-    public String edit(@ModelAttribute("discussion") Discussion discussion, @PathVariable("id") int id){
+    public String edit( @PathVariable("id") int id,
+                        @ModelAttribute("discussion") @Valid Discussion discussion,
+                        BindingResult bindingResult){
+        if (bindingResult.hasErrors()){
+            return "discussions/edit";
+        }
         discussionsDAO.update(id, discussion);
         return "redirect:/discussions";
     }
