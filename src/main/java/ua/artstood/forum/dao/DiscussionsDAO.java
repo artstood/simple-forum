@@ -15,9 +15,12 @@ public class DiscussionsDAO {
 
     public DiscussionsDAO(){
         database = new ArrayList<>();
-        database.add(new Discussion(DB_SIZE++, "Pavel", "Десять лет ищу песню, но не могу найти."));
-        database.add(new Discussion(DB_SIZE++, "IPhoneLover1337", "А это правда, что айфон можно заряжать в микроволновке, а то я боюсь проверять"));
-        database.add(new Discussion(DB_SIZE++, "IPhoneLover1337", "ПОМОГИТЕ, телефон сгорел в микроволновке!"));
+        database.add(new Discussion(DB_SIZE++, "Pavel", "Десять лет ищу песню, но не могу найти.",
+                "В клипе был мужик, он еще класно танцевал"));
+        database.add(new Discussion(DB_SIZE++, "IPhoneLover1337", "А это правда, что айфон можно заряжать в микроволновке, а то я боюсь проверять",
+                "Я видел видео в интернете, где девушка таким образом смогла зарядить свой айфон наполовину"));
+        database.add(new Discussion(DB_SIZE++, "IPhoneLover1337", "ПОМОГИТЕ, телефон сгорел в микроволновке!",
+                "В сервисном ремонте мне отказали в гарантийном ремонте!"));
     }
 
     public List<Discussion> getAllEntries(){
@@ -37,6 +40,7 @@ public class DiscussionsDAO {
         Discussion oldDiscussion = getDiscussion(id);
         oldDiscussion.setTopic(updated.getTopic());
         oldDiscussion.setUsername(updated.getUsername());
+        oldDiscussion.setText(updated.getText());
     }
     public void delete(int id){
         database.removeIf(discussion -> discussion.getId()==id);

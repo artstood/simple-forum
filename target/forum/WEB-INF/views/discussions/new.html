@@ -11,6 +11,9 @@
     <br/>
     <label for="topic">Тема: </label><input type="text" width="40px" th:field="*{topic}" id="topic"/>
     <div style="color: red" th:if="${#fields.hasErrors('topic')}" th:errors="*{topic}">Username Error</div>
+    <br/>
+    <label for="text">Текст: </label><input type="text" width="100px" th:field="*{text}" id="text"/>
+    <div style="color: red" th:if="${#fields.hasErrors('text')}" th:errors="*{text}">Topic Error</div>
     <input type="submit" value="created"/>
 </form>
 </body>

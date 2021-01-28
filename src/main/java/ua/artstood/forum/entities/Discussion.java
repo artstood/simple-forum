@@ -11,14 +11,17 @@ public class Discussion {
     private String username;
     @NotEmpty(message = "Тема не должна быть пустой")
     private String topic;
-    //todo discussion text
+    @NotEmpty(message = "Текст обсуждения не может быть пустым")
+    private String text;
+
     //todo comments list
     //todo date
 
-    public Discussion(int id, String username, String topic) {
+    public Discussion(int id, String username, String topic, String text) {
         this.id = id;
         this.username = username;
         this.topic = topic;
+        this.text = text;
     }
 
     public Discussion() {
@@ -46,6 +49,14 @@ public class Discussion {
 
     public void setTopic(String topic) {
         this.topic = topic;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
     }
 }
 
