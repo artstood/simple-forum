@@ -3,6 +3,11 @@ package ua.artstood.forum.entities;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotEmpty;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class Discussion {
     private int id;
@@ -13,15 +18,16 @@ public class Discussion {
     private String topic;
     @NotEmpty(message = "Текст обсуждения не может быть пустым")
     private String text;
-
+    //FIXME understand how date forms works
+    private Date date = new Date();
     //todo comments list
-    //todo date
 
-    public Discussion(int id, String username, String topic, String text) {
+    public Discussion(int id, String username, String topic, String text,Date date) {
         this.id = id;
         this.username = username;
         this.topic = topic;
         this.text = text;
+        this.date = date;
     }
 
     public Discussion() {
@@ -57,6 +63,19 @@ public class Discussion {
 
     public void setText(String text) {
         this.text = text;
+    }
+
+    public String commentTime() {
+        DateFormat dateFormat = new SimpleDateFormat("MMM dd HH:mm");
+        return dateFormat.format(date.getTime());
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 }
 
