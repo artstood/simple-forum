@@ -5,9 +5,8 @@ import org.hibernate.validator.constraints.Length;
 import javax.validation.constraints.NotEmpty;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
+
 
 public class Discussion {
     private int id;
@@ -18,8 +17,7 @@ public class Discussion {
     private String topic;
     @NotEmpty(message = "Текст обсуждения не может быть пустым")
     private String text;
-    //FIXME understand how date forms works
-    private Date date = new Date();
+    private Date date;
     //todo comments list
 
     public Discussion(int id, String username, String topic, String text,Date date) {
