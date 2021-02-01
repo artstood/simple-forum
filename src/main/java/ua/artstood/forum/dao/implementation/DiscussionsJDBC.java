@@ -5,7 +5,11 @@ import org.springframework.stereotype.Component;
 import ua.artstood.forum.dao.ForumDAO;
 import ua.artstood.forum.entities.Discussion;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Date;
 import java.util.*;
 
@@ -15,7 +19,7 @@ public class DiscussionsJDBC implements ForumDAO {
     private static int ENTRIES_COUNT;
     private Connection connection;
 
-    public DiscussionsJDBC(){
+    public DiscussionsJDBC() {
 
         try {
 
@@ -32,13 +36,13 @@ public class DiscussionsJDBC implements ForumDAO {
         }
     }
 
-    public List<Discussion> getAllDiscussions(){
+    public List<Discussion> getAllDiscussions() {
         List<Discussion> discussions = new ArrayList<>();
-        try{
+        try {
             PreparedStatement statement = connection.prepareStatement("SELECT * FROM discussion");
             ResultSet resultSet = statement.executeQuery();
 
-            while (resultSet.next()){
+            while (resultSet.next()) {
                 discussions.add(extractDiscussionFromResultSet(resultSet));
             }
 
@@ -48,11 +52,11 @@ public class DiscussionsJDBC implements ForumDAO {
         return discussions;
     }
 
-    public Discussion getDiscussionById(int id){
+    public Discussion getDiscussionById(int id) {
         Discussion discussion = new Discussion();
         try {
             PreparedStatement ps = connection.prepareStatement("SELECT * FROM discussion WHERE id = ?");
-            ps.setInt(1,id);
+            ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             rs.next();
             discussion = extractDiscussionFromResultSet(rs);
@@ -62,7 +66,7 @@ public class DiscussionsJDBC implements ForumDAO {
         return discussion;
     }
 
-    public void save(Discussion discussion){
+    public void save(Discussion discussion) {
         try {
             PreparedStatement ps = connection.prepareStatement("INSERT INTO discussion VALUES(?,?,?,?,?)");
             ps.setInt(1, ++ENTRIES_COUNT);
@@ -85,25 +89,26 @@ public class DiscussionsJDBC implements ForumDAO {
             ps.setString(1, updated.getUsername());
             ps.setString(2, updated.getTopic());
             ps.setString(3, updated.getText());
-            ps.setInt(4,id);
+            ps.setInt(4, id);
             ps.executeUpdate();
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-    public void delete(int id){
-        try{
+
+    public void delete(int id) {
+        try {
             PreparedStatement ps = connection.prepareStatement("DELETE FROM discussion" +
                     " WHERE id= ?");
-            ps.setInt(1,id);
+            ps.setInt(1, id);
             ps.executeUpdate();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
     }
 
-    public Discussion extractDiscussionFromResultSet(ResultSet resultSet){
+    public Discussion extractDiscussionFromResultSet(ResultSet resultSet) {
         Discussion discussion = new Discussion();
         try {
             discussion.setId(resultSet.getInt("id"));
@@ -117,8 +122,8 @@ public class DiscussionsJDBC implements ForumDAO {
         return discussion;
     }
 
-    public int discussionLastIndex(){
-        int count=0;
+    public int discussionLastIndex() {
+        int count = 0;
         try {
             PreparedStatement ps = connection.prepareStatement("SELECT MAX(id) AS count FROM discussion");
             ResultSet rs = ps.executeQuery();

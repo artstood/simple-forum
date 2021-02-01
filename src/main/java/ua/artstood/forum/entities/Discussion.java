@@ -10,7 +10,7 @@ import java.util.Date;
 
 public class Discussion {
     private int id;
-    @Length(min=6, max=18, message = "Имя должно быть не короче 6 букв и не длиннее 18")
+    @Length(min = 6, max = 18, message = "Имя должно быть не короче 6 букв и не длиннее 18")
     @NotEmpty(message = "Имя не должно быть пустым")
     private String username;
     @NotEmpty(message = "Тема не должна быть пустой")
@@ -20,7 +20,7 @@ public class Discussion {
     private Date date;
     //todo comments list
 
-    public Discussion(int id, String username, String topic, String text,Date date) {
+    public Discussion(int id, String username, String topic, String text, Date date) {
         this.id = id;
         this.username = username;
         this.topic = topic;

@@ -16,13 +16,13 @@ public class CommentsDAO {
 
 
     public CommentsDAO() {
-        this.database = new ArrayList<>();
-        database.add(new Comment(DB_SIZE++, 0,"forumMaster99", "Darude - Sandstorm попробуй, определенно она"));
-        database.add(new Comment(DB_SIZE++, 0,"RolledRick", "вот, я нашел на ютубе \" https://youtu.be/dQw4w9WgXcQ \" "));
-        database.add(new Comment(DB_SIZE++, 1, "AnDrOiD_EnJoYeR","та не бойся, я свой телефон всегда так заряжаю"));
+        database = new ArrayList<>();
+        database.add(new Comment(DB_SIZE++, 0, "forumMaster99", "Darude - Sandstorm попробуй, определенно она"));
+        database.add(new Comment(DB_SIZE++, 0, "RolledRick", "вот, я нашел на ютубе \" https://youtu.be/dQw4w9WgXcQ \" "));
+        database.add(new Comment(DB_SIZE++, 1, "AnDrOiD_EnJoYeR", "та не бойся, я свой телефон всегда так заряжаю"));
     }
 
-    public List<Comment> getDiscussionsComments(int disId){
-        return database.stream().filter((comment)->comment.getDiscussionId()==disId).collect(Collectors.toList());
+    public List<Comment> getDiscussionsComments(int disId) {
+        return database.stream().filter((comment) -> comment.getDiscussionId() == disId).collect(Collectors.toList());
     }
 }
