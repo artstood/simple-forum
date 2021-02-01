@@ -23,6 +23,6 @@ public class MySpringMvcDispatcherServletInitializer extends AbstractAnnotationC
 
     @Override
     protected Filter[] getServletFilters() {
-        return new Filter[]{new CharsetFilter(),new HiddenHttpMethodFilter()};
+        return new Filter[]{new CharsetFilter(), new HiddenHttpMethodFilter()};
     }
 }

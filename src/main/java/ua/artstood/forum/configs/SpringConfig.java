@@ -21,12 +21,12 @@ public class SpringConfig implements WebMvcConfigurer {
     private final ApplicationContext appContext;
 
     @Autowired
-    public SpringConfig(ApplicationContext appContext){
+    public SpringConfig(ApplicationContext appContext) {
         this.appContext = appContext;
     }
 
     @Bean
-    public SpringResourceTemplateResolver templateResolver(){
+    public SpringResourceTemplateResolver templateResolver() {
         SpringResourceTemplateResolver templateResolver = new SpringResourceTemplateResolver();
         templateResolver.setApplicationContext(appContext);
         templateResolver.setPrefix("/WEB-INF/views/");
@@ -36,7 +36,7 @@ public class SpringConfig implements WebMvcConfigurer {
     }
 
     @Bean
-    public SpringTemplateEngine templateEngine(){
+    public SpringTemplateEngine templateEngine() {
         SpringTemplateEngine templateEngine = new SpringTemplateEngine();
         templateEngine.setTemplateResolver(templateResolver());
         templateEngine.setEnableSpringELCompiler(true);
