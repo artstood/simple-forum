@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import ua.artstood.forum.dao.CommentsDAO;
 
 import ua.artstood.forum.dao.ForumDAO;
 import ua.artstood.forum.entities.Discussion;
@@ -24,12 +23,10 @@ import java.util.Date;
 public class DiscussionsController {
 
     private final ForumDAO forumDAO;
-    private final CommentsDAO commentsDAO;
 
     @Autowired
-    public DiscussionsController(ForumDAO forumDAO, CommentsDAO commentsDAO) {
+    public DiscussionsController(ForumDAO forumDAO) {
         this.forumDAO = forumDAO;
-        this.commentsDAO = commentsDAO;
     }
 
     @GetMapping()
@@ -41,7 +38,7 @@ public class DiscussionsController {
     @GetMapping("{id}")
     public String showSpecificEntry(@PathVariable int id, Model model) {
         model.addAttribute("discussion", forumDAO.getDiscussionById(id));
-        model.addAttribute("comments", commentsDAO.getDiscussionsComments(id));
+        model.addAttribute("comments", forumDAO.getAllCommentsByDiscussionId(id));
         return "discussions/specific_discussion";
     }
 

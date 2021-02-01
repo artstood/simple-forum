@@ -1,6 +1,7 @@
 package ua.artstood.forum.dao;
 
 import org.springframework.stereotype.Component;
+import ua.artstood.forum.entities.Comment;
 import ua.artstood.forum.entities.Discussion;
 
 import java.util.List;
@@ -15,5 +16,8 @@ public interface ForumDAO {
 
     void update(int id, Discussion updated);
 
-    public void delete(int id);
+    void delete(int id);
+
+    List<Comment> getAllCommentsByDiscussionId(int id);
+
 }

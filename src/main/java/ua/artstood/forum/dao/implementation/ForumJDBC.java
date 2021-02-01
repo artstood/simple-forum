@@ -3,6 +3,7 @@ package ua.artstood.forum.dao.implementation;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import ua.artstood.forum.dao.ForumDAO;
+import ua.artstood.forum.entities.Comment;
 import ua.artstood.forum.entities.Discussion;
 
 import java.sql.Connection;
@@ -15,11 +16,11 @@ import java.util.*;
 
 @Component
 @Scope("singleton")
-public class DiscussionsJDBC implements ForumDAO {
+public class ForumJDBC implements ForumDAO {
     private static int ENTRIES_COUNT;
     private Connection connection;
 
-    public DiscussionsJDBC() {
+    public ForumJDBC() {
 
         try {
 
@@ -133,5 +134,34 @@ public class DiscussionsJDBC implements ForumDAO {
             throwables.printStackTrace();
         }
         return count;
+    }
+
+    @Override
+    public List<Comment> getAllCommentsByDiscussionId(int id) {
+        List<Comment> commentList = new ArrayList<>();
+        try {
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM comment WHERE dis_id=?");
+            ps.setInt(1,id);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()){
+                commentList.add(extractCommentFromResultSet(rs));
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return commentList;
+    }
+
+    private Comment extractCommentFromResultSet(ResultSet rs) {
+        Comment comment = new Comment();
+        try {
+            comment.setId(rs.getInt("id"));
+            comment.setDiscussionId(rs.getInt("dis_id"));
+            comment.setUsername(rs.getString("username"));
+            comment.setComment(rs.getString("comment"));
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return comment;
     }
 }
