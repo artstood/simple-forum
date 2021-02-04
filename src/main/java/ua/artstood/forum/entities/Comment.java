@@ -1,10 +1,14 @@
 package ua.artstood.forum.entities;
 
+import javax.validation.constraints.NotEmpty;
+
 public class Comment {
-    public int id;
-    public int discussionId;
-    public String username;
-    public String comment;
+    private int id;
+    private int discussionId;
+    @NotEmpty(message = "Имя не должно быть пустым")
+    private String username;
+    @NotEmpty(message = "Комментарий не может быть пустым")
+    private String comment;
 
     public Comment() {
     }

@@ -20,4 +20,6 @@ public interface ForumDAO {
 
     List<Comment> getAllCommentsByDiscussionId(int id);
 
+    void save(int dis_id, Comment comment);
+
 }

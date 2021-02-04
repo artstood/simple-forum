@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 import ua.artstood.forum.dao.ForumDAO;
+import ua.artstood.forum.entities.Comment;
 import ua.artstood.forum.entities.Discussion;
 
 import javax.validation.Valid;
@@ -80,5 +81,19 @@ public class DiscussionsController {
         forumDAO.delete(id);
         return "redirect:/discussions";
     }
+    @GetMapping("{dis_id}/new")
+    public String newCommentForm(@ModelAttribute("comment") Comment comment, @PathVariable("dis_id") int dis_id){
+        ;return "comments/new";
+    }
 
+    @PostMapping("{dis_id}")
+    public String createComment(@ModelAttribute("comment")Comment comment,
+                                BindingResult bindingResult,
+                                @PathVariable("dis_id") int dis_id) {
+        if (bindingResult.hasErrors()) {
+            return "redirect:/comments/new";
+        }
+        forumDAO.save(dis_id, comment);
+        return "redirect:/discussions/{dis_id}";
+    }
 }

@@ -17,22 +17,23 @@ import java.util.*;
 @Component
 @Scope("singleton")
 public class ForumJDBC implements ForumDAO {
-    private static int ENTRIES_COUNT;
+    private static int DIS_ENTRIES_COUNT;
+    private static int COMMENT_ENTRIES_COUNT;
     private Connection connection;
 
     public ForumJDBC() {
-
         try {
 
-            Class.forName("com.mysql.jdbc.Driver");
-            //fixme ResourceBundle bundle = ResourceBundle.getBundle("src/main/webapp/WEB-INF/db_prop.properties");
+            Class.forName("com.mysql.jdbc.Driver").newInstance();
+            ResourceBundle bundle = ResourceBundle.getBundle("db-prop");
 
             connection = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/forum_db",
-                    "root",
-                    "root");
-            ENTRIES_COUNT = discussionLastIndex();
-        } catch (SQLException | ClassNotFoundException e) {
+                    bundle.getString("url"),
+                    bundle.getString("user"),
+                    bundle.getString("password"));
+            DIS_ENTRIES_COUNT = tableLastIndex("discussion");
+            COMMENT_ENTRIES_COUNT = tableLastIndex("comment");
+        } catch (SQLException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {
             e.printStackTrace();
         }
     }
@@ -70,7 +71,7 @@ public class ForumJDBC implements ForumDAO {
     public void save(Discussion discussion) {
         try {
             PreparedStatement ps = connection.prepareStatement("INSERT INTO discussion VALUES(?,?,?,?,?)");
-            ps.setInt(1, ++ENTRIES_COUNT);
+            ps.setInt(1, ++DIS_ENTRIES_COUNT);
             ps.setString(2, discussion.getUsername());
             ps.setString(3, discussion.getTopic());
             ps.setString(4, discussion.getText());
@@ -123,10 +124,12 @@ public class ForumJDBC implements ForumDAO {
         return discussion;
     }
 
-    public int discussionLastIndex() {
+    public int tableLastIndex(String table) {
         int count = 0;
         try {
-            PreparedStatement ps = connection.prepareStatement("SELECT MAX(id) AS count FROM discussion");
+            @SuppressWarnings("SqlResolve")
+            PreparedStatement ps = connection.prepareStatement("SELECT MAX(id) AS count FROM " + table);
+
             ResultSet rs = ps.executeQuery();
             rs.next();
             count = rs.getInt("count");
@@ -141,15 +144,30 @@ public class ForumJDBC implements ForumDAO {
         List<Comment> commentList = new ArrayList<>();
         try {
             PreparedStatement ps = connection.prepareStatement("SELECT * FROM comment WHERE dis_id=?");
-            ps.setInt(1,id);
+            ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
-            while (rs.next()){
+            while (rs.next()) {
                 commentList.add(extractCommentFromResultSet(rs));
             }
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return commentList;
+    }
+
+    @Override
+    public void save(int dis_id, Comment comment) {
+        try {
+            PreparedStatement ps = connection.prepareStatement("INSERT INTO comment values (?,?,?,?)");
+            ps.setInt(1, ++COMMENT_ENTRIES_COUNT);
+            ps.setInt(2, dis_id);
+            ps.setString(3, comment.getUsername());
+            ps.setString(4, comment.getComment());
+            ps.executeUpdate();
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
     }
 
     private Comment extractCommentFromResultSet(ResultSet rs) {
@@ -164,4 +182,5 @@ public class ForumJDBC implements ForumDAO {
         }
         return comment;
     }
+
 }

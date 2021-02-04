@@ -940,7 +940,7 @@ SELECT|sys.sys_config:null
     </column>
     <column id="294" parent="289" name="comment">
       <Position>4</Position>
-      <DataType>varchar(255)|0s</DataType>
+      <DataType>varchar(8000)|0s</DataType>
     </column>
     <column id="295" parent="290" name="id">
       <Position>1</Position>
