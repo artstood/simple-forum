@@ -24,16 +24,16 @@ public class ForumJDBC implements ForumDAO {
     public ForumJDBC() {
         try {
 
-            Class.forName("com.mysql.jdbc.Driver");
-            //fixme ResourceBundle bundle = ResourceBundle.getBundle("src/main/webapp/WEB-INF/db_prop.properties");
+            Class.forName("com.mysql.jdbc.Driver").newInstance();
+            ResourceBundle bundle = ResourceBundle.getBundle("db-prop");
 
             connection = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/forum_db",
-                    "root",
-                    "root");
+                    bundle.getString("url"),
+                    bundle.getString("user"),
+                    bundle.getString("password"));
             DIS_ENTRIES_COUNT = tableLastIndex("discussion");
-            COMMENT_ENTRIES_COUNT  = tableLastIndex("comment");
-        } catch (SQLException | ClassNotFoundException e) {
+            COMMENT_ENTRIES_COUNT = tableLastIndex("comment");
+        } catch (SQLException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {
             e.printStackTrace();
         }
     }
@@ -127,7 +127,9 @@ public class ForumJDBC implements ForumDAO {
     public int tableLastIndex(String table) {
         int count = 0;
         try {
-            PreparedStatement ps = connection.prepareStatement("SELECT MAX(id) AS count FROM "+table);
+            @SuppressWarnings("SqlResolve")
+            PreparedStatement ps = connection.prepareStatement("SELECT MAX(id) AS count FROM " + table);
+
             ResultSet rs = ps.executeQuery();
             rs.next();
             count = rs.getInt("count");
@@ -142,25 +144,25 @@ public class ForumJDBC implements ForumDAO {
         List<Comment> commentList = new ArrayList<>();
         try {
             PreparedStatement ps = connection.prepareStatement("SELECT * FROM comment WHERE dis_id=?");
-            ps.setInt(1,id);
+            ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
-            while (rs.next()){
+            while (rs.next()) {
                 commentList.add(extractCommentFromResultSet(rs));
             }
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return commentList;
     }
 
     @Override
-    public void save(int dis_id, Comment comment){
-        try{
+    public void save(int dis_id, Comment comment) {
+        try {
             PreparedStatement ps = connection.prepareStatement("INSERT INTO comment values (?,?,?,?)");
-            ps.setInt(1,++COMMENT_ENTRIES_COUNT);
-            ps.setInt(2,dis_id);
-            ps.setString(3,comment.getUsername());
-            ps.setString(4,comment.getComment());
+            ps.setInt(1, ++COMMENT_ENTRIES_COUNT);
+            ps.setInt(2, dis_id);
+            ps.setString(3, comment.getUsername());
+            ps.setString(4, comment.getComment());
             ps.executeUpdate();
 
         } catch (SQLException throwables) {
