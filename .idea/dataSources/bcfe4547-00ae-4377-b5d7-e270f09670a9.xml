@@ -960,7 +960,8 @@ SELECT|sys.sys_config:null
     </column>
     <column id="299" parent="290" name="disc_date">
       <Position>5</Position>
-      <DataType>date|0s</DataType>
+      <DataType>datetime|0s</DataType>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
     </column>
   </database-model>
 </dataSource>
