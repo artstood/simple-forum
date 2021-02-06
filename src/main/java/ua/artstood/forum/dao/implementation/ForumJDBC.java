@@ -6,11 +6,7 @@ import ua.artstood.forum.dao.ForumDAO;
 import ua.artstood.forum.entities.Comment;
 import ua.artstood.forum.entities.Discussion;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.sql.Date;
 import java.util.*;
 
@@ -70,12 +66,14 @@ public class ForumJDBC implements ForumDAO {
 
     public void save(Discussion discussion) {
         try {
-            PreparedStatement ps = connection.prepareStatement("INSERT INTO discussion VALUES(?,?,?,?,?)");
+            PreparedStatement ps = connection.prepareStatement(
+                    "INSERT INTO discussion(id, username, topic, text)" +
+                    " VALUES(?,?,?,?)");
             ps.setInt(1, ++DIS_ENTRIES_COUNT);
             ps.setString(2, discussion.getUsername());
             ps.setString(3, discussion.getTopic());
             ps.setString(4, discussion.getText());
-            ps.setDate(5, new Date(discussion.getDate().getTime()));
+//            ps.setTimestamp(5, new Timestamp(discussion.getDate().getTime()));
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -117,7 +115,7 @@ public class ForumJDBC implements ForumDAO {
             discussion.setUsername(resultSet.getString("username"));
             discussion.setTopic(resultSet.getString("topic"));
             discussion.setText(resultSet.getString("text"));
-            discussion.setDate(resultSet.getDate("disc_date"));
+            discussion.setDate(resultSet.getTimestamp("disc_date"));
         } catch (SQLException e) {
             e.printStackTrace();
         }
