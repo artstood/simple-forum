@@ -1,7 +1,7 @@
 # Simple-forum
 Simple forum, that allows you to post your own discussions and coments.
 
-#Description
+# Description
 
 Current web application represent a simple forum website? where you can post different discussions, and add coments to them.
 Both discussions and comments data are stored in local mysql database.
@@ -19,14 +19,14 @@ Discussion entity are consists of:
  - username;
  - comment text;
  
- #Prerequisites
+ # Prerequisites
  To run this project you need to install next software:
  - Java 8 - development environment;
  - Maven - dependency manager;
  - Tomcat - web server;
  - MySQL - database;
  
-#Technologies used
+# Technologies used
 - Maven
 - Spring MVC 5.2.1
 - Thymeleaf 3.0.11
