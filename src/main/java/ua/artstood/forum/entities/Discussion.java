@@ -75,5 +75,6 @@ public class Discussion {
     public void setDate(Date date) {
         this.date = date;
     }
+
 }
 
