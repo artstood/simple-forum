@@ -51,7 +51,7 @@ public class ForumJDBC implements ForumDAO {
     }
 
     public Discussion getDiscussionById(int id) {
-        Discussion discussion = new Discussion();
+        Discussion discussion = null;
         try {
             PreparedStatement ps = connection.prepareStatement("SELECT * FROM discussion WHERE id = ?");
             ps.setInt(1, id);
@@ -61,6 +61,7 @@ public class ForumJDBC implements ForumDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
         return discussion;
     }
 
@@ -118,8 +119,9 @@ public class ForumJDBC implements ForumDAO {
             discussion.setDate(resultSet.getTimestamp("disc_date"));
         } catch (SQLException e) {
             e.printStackTrace();
+            discussion = null;
         }
-        return discussion;
+        return Optional.ofNullable(discussion).orElse(EMPTY_DISCUSSION);
     }
 
     public int tableLastIndex(String table) {

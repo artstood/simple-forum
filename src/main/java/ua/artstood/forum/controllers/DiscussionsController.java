@@ -83,7 +83,7 @@ public class DiscussionsController {
     }
     @GetMapping("{dis_id}/new")
     public String newCommentForm(@ModelAttribute("comment") Comment comment, @PathVariable("dis_id") int dis_id){
-        ;return "comments/new";
+        return "comments/new";
     }
 
     @PostMapping("{dis_id}")
