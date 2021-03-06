@@ -29,6 +29,7 @@ Discussion entity are consists of:
 # Technologies used
 - Maven
 - Spring MVC 5.2.1
+- Spring Boot
 - Thymeleaf 3.0.11
 - Hibernate Validator 6.1.6
 - Mysql Connector 8.0.23
