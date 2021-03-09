@@ -33,3 +33,4 @@ Discussion entity are consists of:
 - Thymeleaf 3.0.11
 - Hibernate Validator 6.1.6
 - Mysql Connector 8.0.23
+- JPA
