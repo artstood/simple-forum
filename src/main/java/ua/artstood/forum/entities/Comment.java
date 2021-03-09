@@ -1,38 +1,48 @@
 package ua.artstood.forum.entities;
 
+import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 
+@Entity
+@Table(name = "comment")
 public class Comment {
-    private int id;
-    private int discussionId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = "dis_id")
+    private Long discussionId;
+
     @NotEmpty(message = "Имя не должно быть пустым")
+    @Column(name = "username")
     private String username;
+
+    @Column(name = "text")
     @NotEmpty(message = "Комментарий не может быть пустым")
-    private String comment;
+    private String text;
 
     public Comment() {
     }
 
-    public Comment(int id, int discussionId, String username, String comment) {
-        this.id = id;
+    public Comment(Long discussionId, String username, String text) {
         this.discussionId = discussionId;
         this.username = username;
-        this.comment = comment;
+        this.text = text;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public int getDiscussionId() {
+    public Long getDiscussionId() {
         return discussionId;
     }
 
-    public void setDiscussionId(int discussionId) {
+    public void setDiscussionId(Long discussionId) {
         this.discussionId = discussionId;
     }
 
@@ -44,11 +54,11 @@ public class Comment {
         this.username = username;
     }
 
-    public String getComment() {
-        return comment;
+    public String getText() {
+        return text;
     }
 
-    public void setComment(String comment) {
-        this.comment = comment;
+    public void setText(String text) {
+        this.text = text;
     }
 }
