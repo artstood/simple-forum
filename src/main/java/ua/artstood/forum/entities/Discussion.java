@@ -2,25 +2,37 @@ package ua.artstood.forum.entities;
 
 import org.hibernate.validator.constraints.Length;
 
+import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-
+@Entity
+@Table(name = "discussion")
 public class Discussion {
-    private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = "username")
     @Length(min = 6, max = 18, message = "Имя должно быть не короче 6 букв и не длиннее 18")
     @NotEmpty(message = "Имя не должно быть пустым")
     private String username;
+
+    @Column(name = "topic")
     @NotEmpty(message = "Тема не должна быть пустой")
     private String topic;
+
+    @Column(name = "text")
     @NotEmpty(message = "Текст обсуждения не может быть пустым")
     private String text;
+
+    @Column(name="disc_date")
     private Date date;
     //todo comments list
 
-    public Discussion(int id, String username, String topic, String text, Date date) {
+    public Discussion(Long id, String username, String topic, String text, Date date) {
         this.id = id;
         this.username = username;
         this.topic = topic;
@@ -31,11 +43,11 @@ public class Discussion {
     public Discussion() {
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

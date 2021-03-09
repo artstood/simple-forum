@@ -1,6 +1,5 @@
 .idea
 *.iml
 target/*
-src/main/resources/db-prop.properties
+
 src/main/resources/application.properties
-Test
